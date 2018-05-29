@@ -4,14 +4,12 @@ import java.awt.Graphics;
 public class Bullet {
 
 	private int speed;
-	private boolean shot;
-	int x;
-	int y;
-	int d;
+	private int x;
+	private int y;
+	private int d;
 	
 	public Bullet(int xint,int yint, int dint){
 		speed = 8;
-		shot= false;
 		x = xint;
 		y = yint;
 		d = dint;
@@ -27,7 +25,14 @@ public class Bullet {
 		
 		x = x+changex;
 		y = y+changey;
-		
+	}
+	
+	public int getx(){
+		return x;
+	}
+	
+	public int gety(){
+		return y;
 	}
 	
 }
