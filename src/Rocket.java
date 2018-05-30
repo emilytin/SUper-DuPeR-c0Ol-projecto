@@ -19,13 +19,10 @@ public class Rocket {
 	private int tipx;
 	private int tipy;
 	private int direction;
-	private int lives;
 	private Image pic;
 	private Image flame;
 	public static int width = 80;
 	public static int height = 90;
-	private int score;
-	private Font customFont;
 	private double speed;
 	private double maxSpeed;
 	private double acceleration;
@@ -37,10 +34,8 @@ public class Rocket {
 		tipx = (int)(x + ( height/2 *Math.cos(Math.toRadians(90-direction))));
 		tipy= (int) (y- (height/2 *Math.sin(Math.toRadians(90-direction))));
 		direction =0;
-		lives = 3;
 		speed=0;
 		friction = 0.95;
-		score = 0;
 		maxSpeed = 4.0;
 		acceleration = .2;
 	
@@ -64,7 +59,6 @@ public class Rocket {
 	
 	
 	public void draw (Graphics g, boolean up){
-		this.drawStats(g);
 		
 		if (up==true){
 			Graphics2D g2d=(Graphics2D)g;
@@ -86,34 +80,7 @@ public class Rocket {
 		    g2d.setTransform(backup);
 		}
 	}
-	
 
-	public void drawStats(Graphics g) {
-		g.setColor(Color.WHITE);
-		g.setFont(new Font("TimesRoman", Font.PLAIN, 60));
-		g.drawString(Integer.toString(score), 10, 47);
-		
-		int width = 40;
-		int height =50;
-		int place = 10;
-		for(int l= lives; l>0; l--){
-			g.drawImage(pic, place, 60, width, height, null);
-			place = place + 25;
-		}
-	}
-	
-	public int getLives(){
-		return lives;
-	}
-	
-	public void loseLife(){
-		lives--;
-		x= 475;
-		y=475;
-		tipx = (int)(x + ( height/2 *Math.cos(Math.toRadians(90-direction))));
-		tipy= (int) (y- (height/2 *Math.sin(Math.toRadians(90-direction))));
-		direction =0;
-	}
 	
 	public void changeDirection(int i){
 		direction+= i;
@@ -133,35 +100,35 @@ public class Rocket {
 
 
 	public void move(int oldDirection) {
-		//time is determined by a timer in the up button method
-				//turns off after up button is released
 				if(speed < maxSpeed){
 					double changeY = (speed+acceleration)*(Math.sin(Math.toRadians(oldDirection)));
 					double changeX = (speed+acceleration)*(Math.cos(Math.toRadians(oldDirection)));
-					//double changeY =  (speed*(Math.sin(Math.toRadians(direction))));
-					//double changeX =  (speed*(Math.cos(Math.toRadians(direction))));
 					
 					x = (int) (x+changeX);
 					y = (int) (y-changeY);
 					tipx+= changeX;
 					tipy-= changeY;
-					//System.out.println(speed);
+					
 					speed = speed+(acceleration);
 					if(x>950){
 						x=0;
-						tipx = 0;
+						int changex = (int)(height/2 * Math.cos(Math.toRadians(direction-90)));
+						tipx = x+changex;
 					}
 					if(y>950){
 						y=0;
-						tipy = 0;
+						int changey = (int)(height/2 * Math.sin(Math.toRadians(direction-90)));
+						tipy = y+changey;
 					}
 					if (x<0){
 						x=950;
-						tipx = 0;
+						int changex = (int)(height/2 * Math.cos(Math.toRadians(direction-90)));
+						tipx = x+changex;
 					}
 					if (y<0){
 						y=950;
-						tipy = 0;
+						int changey = (int)(height/2 * Math.sin(Math.toRadians(direction-90)));
+						tipy = y+changey;
 					}
 				}
 					else{
@@ -169,35 +136,60 @@ public class Rocket {
 						double changeX = (maxSpeed*(Math.cos(Math.toRadians(oldDirection))));
 						x = (int) (x+changeX);
 						y = (int) (y-changeY);
-						//System.out.println("**"+speed);
 						tipx+= changeX;
 						tipy-= changeY;
 						if(x>950){
 							x=0;
-							tipx = 0;
+							int changex = (int)(height/2 * Math.cos(Math.toRadians(direction-90)));
+							tipx = x+changex;
 						}
 						if(y>950){
 							y=0;
-							tipy = 0;
+							int changey = (int)(height/2 * Math.sin(Math.toRadians(direction-90)));
+							tipy = y+changey;
 						}
 						if (x<0){
 							x=950;
-							tipx = 950;
+							int changex = (int)(height/2 * Math.cos(Math.toRadians(direction-90)));
+							tipx = x+changex;
 						}
 						if (y<0){
 							y=950;
-							tipy = 950;
+							int changey = (int)(height/2 * Math.sin(Math.toRadians(direction-90)));
+							tipy = y+changey;
 						}
+						
+						
 				}
 		}
 	
-	public void slide(double d){
-		double changeY = (speed*(Math.sin(Math.toRadians(90-d))));
-		double changeX = (speed*(Math.cos(Math.toRadians(90-d))));
+	public void slide(){
+		double changeY = ((speed/2)*(Math.sin(Math.toRadians(90-direction))));
+		double changeX = (speed*(Math.cos(Math.toRadians(90-direction))));
 		x = (int) (x+changeX);
 		y = (int) (y-changeY);
 		tipx+= changeX;
 		tipy-= changeY;
+		if(x>950){
+			x=0;
+			int changex = (int)(height/2 * Math.cos(Math.toRadians(direction-90)));
+			tipx = x+changex;
+		}
+		if(y>950){
+			y=0;
+			int changey = (int)(height/2 * Math.sin(Math.toRadians(direction-90)));
+			tipy = y+changey;
+		}
+		if (x<0){
+			x=950;
+			int changex = (int)(height/2 * Math.cos(Math.toRadians(direction-90)));
+			tipx = x+changex;
+		}
+		if (y<0){
+			y=950;
+			int changey = (int)(height/2 * Math.sin(Math.toRadians(direction-90)));
+			tipy = y+changey;
+		}
 		
 	}
 
@@ -216,14 +208,6 @@ public class Rocket {
 		return acceleration;
 	}
 
-
-	public void inertaSlow(int s) {
-		s= (int) (s*friction);
-		if (s<.05){
-			s = 0;
-		}	
-	}
-
 	public int getx() {
 		return x;
 	}
@@ -232,15 +216,9 @@ public class Rocket {
 		return direction;
 	}
 
-
 	public int gety() {
 		return y;
 	}
-
-	public void addScore(int s){
-		score+= s;
-	}
-
 
 	public Bullet shoot() {
 		int bx = tipx;
@@ -251,8 +229,7 @@ public class Rocket {
 		return b;
 	}
 
-
-	public String getScore() {
-		return Integer.toString(score);
+	public Image getPic() {
+		return pic;
 	}
 }

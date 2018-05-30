@@ -20,7 +20,6 @@ public class Asteroid {
 	
 	
 	public Asteroid(int SIZE){
-		
 		int droll = (int) (Math.random() *4);
 		if (droll ==0){
 			x = (int) (Math.random()*950);
@@ -81,15 +80,12 @@ public class Asteroid {
 		this.SIZE=SIZE;
 		if(this.SIZE == 130 ){
 			score= 20;
-			speed = (Math.random()*1.5+1.5);
 		}
 		else if (this.SIZE== 70){
 			score= 50;
-			speed = (Math.random()*2 +1.5);
 		}
 		else if (this.SIZE== 45){
 			score= 100;
-			speed = (Math.random()*3 +2);
 		}
 	
 		speed = (Math.random()*1.5+1.5);
@@ -122,8 +118,7 @@ public class Asteroid {
 		speed=(Math.random()*1.5+1.5);
 	}
 
-	public void draw (Graphics g){
-		//g.drawImage(pic, x, y, SIZE, SIZE, null);
+	public void draw (Graphics g, int size){
 		Graphics2D g2d=(Graphics2D)g;
 	    AffineTransform backup = g2d.getTransform();
 	    if( spin.equals("left")){
@@ -133,9 +128,9 @@ public class Asteroid {
 	    	shpin++;
 	    }
 	    double radangle= Math.toRadians(shpin);
-	    AffineTransform a = AffineTransform.getRotateInstance(radangle, x+ (SIZE/2), y+ (SIZE/2));
+	    AffineTransform a = AffineTransform.getRotateInstance(radangle, x+ (size/2), y+ (size/2));
 	    g2d.setTransform(a);
-	    g2d.drawImage(pic, x, y , SIZE, SIZE, null);
+	    g2d.drawImage(pic, x, y , size, size, null);
 	    g2d.setTransform(backup);
 	}
 
@@ -147,7 +142,6 @@ public class Asteroid {
 		y = y+changey;
 	}
 	
-	
 	public int getx(){
 		return x;
 	}
@@ -155,13 +149,13 @@ public class Asteroid {
 	public int gety(){
 		return y;
 	}
-	
-	public int getSIZE(){
-		return SIZE;
-	}
-	
+
 	public int getAngle(){
 		return angle;
+	}
+	
+	public int getSize(){
+		return SIZE;
 	}
 	
 	public int getScore(){
